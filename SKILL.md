@@ -137,6 +137,20 @@ Set `CLAUDE_SCREENSHOT_DIR` to override `/tmp/claude-screenshots`:
 CLAUDE_SCREENSHOT_DIR=~/Pictures/claude scripts/capture.sh full
 ```
 
+## Automatic downscaling (Retina / 4K)
+
+Screenshots are automatically downscaled to **1440px wide** (preserving aspect ratio) using macOS built-in `sips`. This keeps token usage reasonable without losing UI detail.
+
+Override with `CLAUDE_SCREENSHOT_MAX_WIDTH`:
+
+```bash
+CLAUDE_SCREENSHOT_MAX_WIDTH=1920 scripts/capture.sh full   # larger
+CLAUDE_SCREENSHOT_MAX_WIDTH=1024 scripts/capture.sh full   # smaller
+CLAUDE_SCREENSHOT_MAX_WIDTH=0 scripts/capture.sh full      # disable (full native res)
+```
+
+The default (1440px) is a sweet spot: sharp enough to read UI text and judge layout, small enough that multiple screenshots don't bloat the conversation context.
+
 ## Why these defaults
 
 - **PNG, not JPG**: lossless, captures UI text crisply, and the multimodal Read tool handles it natively.

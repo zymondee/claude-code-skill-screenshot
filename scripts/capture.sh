@@ -4,6 +4,7 @@
 set -euo pipefail
 
 OUTDIR="${CLAUDE_SCREENSHOT_DIR:-/tmp/claude-screenshots}"
+MAX_WIDTH="${CLAUDE_SCREENSHOT_MAX_WIDTH:-1440}"
 mkdir -p "$OUTDIR"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 OUTFILE="$OUTDIR/screenshot-$TIMESTAMP.png"
@@ -106,6 +107,14 @@ esac
 if [ ! -f "$OUTFILE" ]; then
   echo "No screenshot was created (interactive selection cancelled?)" >&2
   exit 2
+fi
+
+# Downscale if wider than MAX_WIDTH (preserves aspect ratio)
+if [ "$MAX_WIDTH" != "0" ]; then
+  CURRENT_WIDTH=$(sips -g pixelWidth "$OUTFILE" 2>/dev/null | awk '/pixelWidth/{print $2}')
+  if [ -n "$CURRENT_WIDTH" ] && [ "$CURRENT_WIDTH" -gt "$MAX_WIDTH" ]; then
+    sips --resampleWidth "$MAX_WIDTH" "$OUTFILE" >/dev/null 2>&1
+  fi
 fi
 
 echo "$OUTFILE"
