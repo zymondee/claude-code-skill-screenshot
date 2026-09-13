@@ -40,6 +40,16 @@ git -C localVoice/VoiceStudio checkout FETCH_HEAD
 git add localVoice/VoiceStudio && git commit -m "chore(localVoice): bump VoiceStudio"
 ```
 
+### Security audit
+
+A review of this pinned commit for malicious code, outbound traffic, telemetry and
+known vulnerabilities lives in [`security-audit/`](security-audit/) — English
+markdown for reading and diffing, plus a Swedish PDF. Verdict: no malicious code
+found; residual risks are structural (third-party model files, unsigned Windows
+installers, `curl | sh` install) and documented with mitigations.
+
+Re-run it after bumping the submodule — the findings are pinned to commit `eaf8bb9`.
+
 ### Install / run
 
 Follow `localVoice/VoiceStudio/README.md` — it is the upstream source of truth for
