@@ -1,0 +1,3 @@
+[submodule "localVoice/VoiceStudio"]
+	path = localVoice/VoiceStudio
+	url = https://github.com/debpalash/VoiceStudio.git
