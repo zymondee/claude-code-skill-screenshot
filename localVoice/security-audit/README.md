@@ -66,7 +66,7 @@ not a bad one:
 | Admin routes reachable unauthenticated (#1213) | In server mode a trusted-network client could reach `/system/*` and `/api/settings/*` without a credential. The project classes these routes as "RCE-class". The short share PIN also granted admin. | **Fixed** in v0.4.0 — API key or genuine loopback required |
 | 35 + 5 dependency advisories (#1456, #2030, #2031) | Python and Rust dependency CVEs; protobuf/transformers in CosyVoice 3 | **Fixed** by upgrades |
 | Invalid voice profile could be persisted (#1141) | Free-form text in a profile field persisted a profile that failed every later generation — "re-exploited three times through different clients" | **Fixed** — server sanitizes all profile kinds |
-| Unsigned Windows installers (#1712) | No Authenticode signature; SmartScreen warns and the publisher cannot be cryptographically verified | **Not planned** — open, deliberate trade-off |
+| Unsigned installers on Windows and macOS (#1712, #134, #72) | Windows: no Authenticode signature, SmartScreen warns. macOS: ad-hoc signed but not notarized, so Gatekeeper blocks the first launch. Neither publisher can be cryptographically verified. | **Not planned / unfunded** — Windows signing is declined; macOS notarization needs a paid Apple Developer account |
 | Missing watermark in API (#1169) | `/v1/audio/speech` returned unwatermarked audio — EU AI Act Art. 50(2) compliance, not an attack vector | **Fixed** |
 
 ## 4. Residual risks, ranked
@@ -79,7 +79,10 @@ not a bad one:
    run executables bundled with a model archive.
 2. **Unsigned Windows installer.** Only the checksum can be verified, not the publisher.
    *Mitigation:* on Windows, build from source, or verify SHA256 against the
-   release `checksums` file. The macOS build is notarized.
+   release `checksums` file. macOS is **also** unsigned in the Apple sense — the
+   DMG is ad-hoc code-signed but **not notarized** (the release workflow is wired
+   for it and activates only once Apple Developer secrets are set), so Gatekeeper
+   blocks the first launch and the same SHA-256 check applies there.
 3. **`curl … | sh` install.** `scripts/install.sh` does verify SHA256, but
    `verify_sha256()` returns 0 with a warning when neither `shasum` nor
    `sha256sum` exists, and the checksum file comes from the same origin as the

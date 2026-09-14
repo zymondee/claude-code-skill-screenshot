@@ -218,10 +218,11 @@ A(table(
     "Det är hela ekosystemets problem, inte det här projektets.",
     "Håll dig till de motorer appen föreslår. Projektets egen säkerhetspolicy säger uttryckligen: "
     "aldrig privat distribuerade modellarkiv, aldrig körbara filer som följer med ett modellarkiv."],
-   ["2", "Osignerad Windows-installer",
-    "Ingen Authenticode-signatur. Du kan inte verifiera utgivaren i Windows, bara checksumman.",
-    "På Windows: installera hellre från källkod, eller verifiera SHA256 mot "
-    "<font face='DJ-M'>checksums</font>-filen i GitHub-releasen. macOS-bygget är notariserat."],
+   ["2", "Osignerade installerare (Windows + macOS)",
+    "Windows saknar Authenticode-signatur. macOS-DMG:n är ad-hoc-signerad men <b>inte notariserad</b> — Gatekeeper blockerar första starten. Du kan inte verifiera utgivaren på någon av dem, bara checksumman.",
+    "Verifiera SHA256 mot <font face='DJ-M'>checksums</font>-filen i GitHub-releasen "
+    "på båda plattformarna, eller bygg från källkod. På macOS: högerklicka → Öppna "
+    "vid första starten."],
    ["3", "<font face='DJ-M'>curl … | sh</font>-installation",
     "Installationsskriptet gör SHA256-kontroll, men <i>hoppar över</i> den om inget "
     "<font face='DJ-M'>shasum</font>/<font face='DJ-M'>sha256sum</font> finns på maskinen — och "
