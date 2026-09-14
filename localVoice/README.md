@@ -40,6 +40,20 @@ git -C localVoice/VoiceStudio checkout FETCH_HEAD
 git add localVoice/VoiceStudio && git commit -m "chore(localVoice): bump VoiceStudio"
 ```
 
+### Setup
+
+[`SETUP-APPLE-SILICON.md`](SETUP-APPLE-SILICON.md) — build-from-source checklist for
+an Apple Silicon Mac with 16 GB, including which engines to pick, the Swedish
+dictation path, and the memory setting to leave alone.
+
+### Moving this to a private repo
+
+`./localVoice/bootstrap-private-repo.sh [repo-name]` builds a standalone private
+repo from this folder — same docs, VoiceStudio re-added as a submodule pinned to
+the same upstream commit — and pushes it with `gh`. Without `gh` it stops and
+prints the two manual commands. Clone it elsewhere with
+`gh repo clone <name> -- --recurse-submodules`.
+
 ### Security audit
 
 A review of this pinned commit for malicious code, outbound traffic, telemetry and
